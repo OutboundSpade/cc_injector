@@ -18,7 +18,7 @@ Use it just as you would gcc
 
 ### Modifying Variables
 
-In the `cc_injector` file, 2 variables are inted for modification:
+In the `cc_injector` file, 2 variables are intended for modification:
 `CC` and `TMP_PATH`.
 
 `CC` - path/name of your "real" c compiler (ex. gcc, clang)
