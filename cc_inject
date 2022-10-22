@@ -1,6 +1,6 @@
 #!/bin/bash
 CC=/usr/bin/gcc    #"real" C compiler path
-TMP_PATH=./tmp_dir #<INSERT PATH HERE>
+TMP_PATH=./tmp_dir #<- INSERT PATH HERE
 
 includes_c_file=false
 inOutArg=false
